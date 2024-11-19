@@ -1,4 +1,4 @@
-//+private
+#+private
 package bits
 
 import "core:testing"

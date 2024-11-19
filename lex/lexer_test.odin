@@ -1,4 +1,4 @@
-//+private
+#+private
 package lex
 
 import "core:testing"

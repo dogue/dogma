@@ -65,6 +65,11 @@ add_arg :: proc(p: ^Parser, type: ArgType, name: string, short: rune, desc: stri
     })
 }
 
+get_def_index :: proc {
+    get_def_idx_by_name,
+    get_def_idx_by_short,
+}
+
 get_def_idx_by_name :: proc(p: Parser, name: string) -> int {
     for def, i in p.defs {
         if def.name == name {
@@ -93,7 +98,7 @@ parse :: proc(p: ^Parser, args: []string) -> (ok: bool, err: ParseError) {
         // long arguments
         if strings.has_prefix(arg, "--") {
             name := arg[2:]
-            def_idx := get_def_idx_by_name(p^, name)
+            def_idx := get_def_index(p^, name)
 
             if def_idx < 0 {
                 return false, ParseError {
@@ -127,7 +132,7 @@ parse :: proc(p: ^Parser, args: []string) -> (ok: bool, err: ParseError) {
         // short arguments
         } else if strings.has_prefix(arg, "-") {
             for c, i in arg[1:] {
-                def_idx := get_def_idx_by_short(p^, c)
+                def_idx := get_def_index(p^, c)
                 if def_idx < 0 {
                     return false, ParseError {
                         type = .UndefinedArgument,
